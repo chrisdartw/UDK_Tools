@@ -109,6 +109,7 @@
 [Components]
   AppPkg/Applications/LongRunShellTool/LongRunShellTool.inf
   AppPkg/Applications/VbiosTest/VbiosTest.inf
+  AppPkg/Applications/OpenGc3Test/OpenGc3Test.inf
 
   AppPkg/Applications/EntryPointTest1/EntryPointTest.inf
   AppPkg/Applications/EntryPointTest2/EntryPointTest.inf

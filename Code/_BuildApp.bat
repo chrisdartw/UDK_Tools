@@ -22,6 +22,7 @@ set p=%p% "EntryPointTest1"
 set p=%p% "EntryPointTest2"
 set p=%p% "EntryPointTest3"
 set p=%p% "VbiosTest"
+set p=%p% "OpenGc3Test"
 
 for %%i in (%p%) do (
   copy /y .\build\AppPkg\DEBUG_VS2015x86\IA32\%%~i.efi   .\AppPkg\Applications\%%~i\%%~i_DEBUG_IA32.efi   > NUL
