@@ -85,6 +85,8 @@
 
   CacheMaintenanceLib|MdePkg/Library/BaseCacheMaintenanceLib/BaseCacheMaintenanceLib.inf
 
+  PciExpressLib|MdePkg/Library/BasePciExpressLib/BasePciExpressLib.inf
+
 ###################################################################################################
 #
 # Components Section - list of the modules and components that will be processed by compilation
@@ -106,6 +108,7 @@
 
 [Components]
   AppPkg/Applications/LongRunShellTool/LongRunShellTool.inf
+  AppPkg/Applications/VbiosTest/VbiosTest.inf
 
   AppPkg/Applications/EntryPointTest1/EntryPointTest.inf
   AppPkg/Applications/EntryPointTest2/EntryPointTest.inf
