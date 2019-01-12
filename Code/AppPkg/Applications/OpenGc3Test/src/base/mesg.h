@@ -1,8 +1,10 @@
 #ifndef OPENGC3_BASE_MESG_H
 #define OPENGC3_BASE_MESG_H
 
+#ifndef  UEFI_SUPPORT
 #include <stdio.h>
 #include <stdlib.h>
+#endif
 
 #include "misc.h"
 

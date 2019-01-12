@@ -6,10 +6,15 @@
 #include "../base/misc.h"
 #include "../base/snym.h"
 
+#ifndef  UEFI_SUPPORT
 #include <math.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
+#else
+#undef NORMAL
+#undef PACKED
+#endif
 
 
 /* ccdll create */

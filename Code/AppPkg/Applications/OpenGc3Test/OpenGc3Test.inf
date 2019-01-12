@@ -27,6 +27,11 @@
 
 [Sources]
   OpenGc3Test.c
+  test/list/ccdll-test.c
+  test/list/ccxll-test.c
+  test/list/ccsll-test.c
+  #test/tree/ccgbt-test.c
+  test/vect/ccarr-test.c  
 
 [Packages]
   StdLib/StdLib.dec
@@ -37,3 +42,7 @@
   LibC
   LibStdio
   LibMath
+
+[BuildOptions]
+  MSFT:*_*_*_CC_FLAGS = /wd4003 /wd4706
+

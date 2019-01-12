@@ -147,10 +147,10 @@ VbiosTestEntry (
          RegisterSet.X.CX, RegisterSet.X.DX, Test);
   if (RegisterSet.X.AX == 0x005F) {
     BuildNum2 = 0;
-    BuildNum2 += ( (RegisterSet.E.EBX & 0x0000000F) >>  0) * 1;
-    BuildNum2 += ( (RegisterSet.E.EBX & 0x00000F00) >>  8) * 10;
-    BuildNum2 += ( (RegisterSet.E.EBX & 0x000F0000) >> 16) * 100;
-    BuildNum2 += ( (RegisterSet.E.EBX & 0x0F000000) >> 24) * 1000;
+    BuildNum2 += ((RegisterSet.E.EBX & 0x0000000F) >>  0) * 1;
+    BuildNum2 += ((RegisterSet.E.EBX & 0x00000F00) >>  8) * 10;
+    BuildNum2 += ((RegisterSet.E.EBX & 0x000F0000) >> 16) * 100;
+    BuildNum2 += ((RegisterSet.E.EBX & 0x0F000000) >> 24) * 1000;
   } else {
     BuildNum2 = 9999;
   }
@@ -164,9 +164,9 @@ VbiosTestEntry (
          RegisterSet.X.CX, RegisterSet.X.DX, Test);
   if (RegisterSet.X.AX == 0x005F) {
     BuildNum3 = 0;
-    BuildNum3 += (UINT8) ( (RegisterSet.H.DH & 0xF) * 10 + (RegisterSet.H.DL & 0xF));
+    BuildNum3 += (UINT8) ((RegisterSet.H.DH & 0xF) * 10 + (RegisterSet.H.DL & 0xF));
     BuildNum3 *= 100;
-    BuildNum3 += (UINT8) ( (RegisterSet.H.BH & 0xF) * 10 + (RegisterSet.H.BL & 0xF));
+    BuildNum3 += (UINT8) ((RegisterSet.H.BH & 0xF) * 10 + (RegisterSet.H.BL & 0xF));
   } else {
     BuildNum3 = 9999;
   }

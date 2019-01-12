@@ -21,14 +21,16 @@
 
 /* Copies bytes between buffers */
 #pragma function(memcpy)
-void * memcpy (void *dest, const void *src, unsigned int count)
+void *
+memcpy (void *dest, const void *src, unsigned int count)
 {
   return CopyMem (dest, src, (UINTN)count);
 }
 
 /* Sets buffers to a specified character */
 #pragma function(memset)
-void * memset (void *dest, char ch, unsigned int count)
+void *
+memset (void *dest, char ch, unsigned int count)
 {
   //
   // NOTE: Here we use one base implementation for memset, instead of the direct
@@ -46,7 +48,7 @@ void * memset (void *dest, char ch, unsigned int count)
 
   Pointer = (UINT8 *)dest;
   while (count-- != 0) {
-    *(Pointer++) = ch;
+    * (Pointer++) = ch;
   }
 
   return dest;

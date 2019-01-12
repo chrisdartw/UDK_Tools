@@ -21,8 +21,13 @@
 #define PRAGMA_NORMAL_BGN
 #define PRAGMA_NORMAL_END
 
+#ifdef __GNUC__
 #define PRAGMA_PACKED_BGN  _Pragma("pack(push, 1)")
 #define PRAGMA_PACKED_END  _Pragma("pack(pop)"    )
+#else
+#define PRAGMA_PACKED_BGN  __pragma(pack(push, 1))
+#define PRAGMA_PACKED_END  __pragma(pack(pop)    )
+#endif
 
 
 /* compiler extensions */

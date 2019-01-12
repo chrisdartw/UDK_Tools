@@ -4,8 +4,10 @@
 #include "mesg.h"
 #include "misc.h"
 
+#ifndef  UEFI_SUPPORT
 #include <stdio.h>
 #include <string.h>
+#endif
 
 
 /* safe allocation */

@@ -6,8 +6,13 @@
 #include "../base/snym.h"
 
 
+#ifndef  UEFI_SUPPORT
 #include <stdint.h>
 #include <stdbool.h>
+#else
+#undef NORMAL
+#undef PACKED
+#endif
 
 
 /* ccgbt create */

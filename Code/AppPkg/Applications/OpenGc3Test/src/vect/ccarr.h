@@ -4,8 +4,10 @@
 #include "../base/misc.h"
 #include "../base/snym.h"
 
+#ifndef  UEFI_SUPPORT
 #include <limits.h>
 #include <string.h>
+#endif
 
 
 /* ccarr create */

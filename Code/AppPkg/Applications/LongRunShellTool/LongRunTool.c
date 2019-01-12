@@ -37,18 +37,18 @@
 
 
 STATIC CONST SHELL_PARAM_ITEM LongRunParamList[] = {
-//
-//  -cr   ColdReset
-//  -wr   WarmReset
-//  -sr   ShutdownReset
-//  -pcr  PowerCycleReset   <EfiResetPlatformSpecific, unsupported>
-//  -gr   GlobalReset       <EfiResetPlatformSpecific, unsupported>
-//  -gre  GlobalResetWithEc <EfiResetPlatformSpecific, unsupported>
-//
-//  -s xx     Delay xx seconds to action
-//  -a 0x1800 PMBASE ACPI Base Address
-//  -t xx     SetWakeupTime after xx seconds
-//
+  //
+  //  -cr   ColdReset
+  //  -wr   WarmReset
+  //  -sr   ShutdownReset
+  //  -pcr  PowerCycleReset   <EfiResetPlatformSpecific, unsupported>
+  //  -gr   GlobalReset       <EfiResetPlatformSpecific, unsupported>
+  //  -gre  GlobalResetWithEc <EfiResetPlatformSpecific, unsupported>
+  //
+  //  -s xx     Delay xx seconds to action
+  //  -a 0x1800 PMBASE ACPI Base Address
+  //  -t xx     SetWakeupTime after xx seconds
+  //
   {L"/?",   TypeFlag},
   {L"-h",   TypeFlag},
   {L"-cr",  TypeFlag},
@@ -71,7 +71,7 @@ IsLeapYear (
   IN UINT16 Year
   )
 {
-  return (Year % 4 == 0) && ( (Year % 100 != 0) || (Year % 400 == 0));
+  return (Year % 4 == 0) && ((Year % 100 != 0) || (Year % 400 == 0));
 }
 
 STATIC
@@ -87,7 +87,7 @@ GetTimeAfterSeconds (
   UINT8                   DayOfMonth = 0;
   STATIC UINT8            mDaysOfMonthInfo[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-  if ( (FirstTime == NULL) || (SecondTime == NULL)) {
+  if ((FirstTime == NULL) || (SecondTime == NULL)) {
     return EFI_INVALID_PARAMETER;
   }
   if (AfterSeconds == 0) {
@@ -108,7 +108,7 @@ GetTimeAfterSeconds (
 
   if (Reminder > 0) {
     Reminder = Reminder + (UINT32) Time.Day;
-    if ( (Time.Month == 2) && IsLeapYear (Time.Year)) {
+    if ((Time.Month == 2) && IsLeapYear (Time.Year)) {
       DayOfMonth = 29;
     } else {
       DayOfMonth = mDaysOfMonthInfo[Time.Month - 1];
@@ -251,7 +251,7 @@ LongRunToolEntry (
   if (!EFI_ERROR (Status)) {
     Status = GetTimeAfterSeconds (&FirstTime, (UINT32) (WakeSeconds + DelaySeconds + 1), &SecondTime);
   }
-  if ( (WakeSeconds != 0) && (AcpiBar != 0)) {
+  if ((WakeSeconds != 0) && (AcpiBar != 0)) {
     Print (L"Now is  %04d/%02d/%02d  %02d:%02d:%02d\n",
            FirstTime.Year,
            FirstTime.Month,
@@ -292,28 +292,28 @@ LongRunToolEntry (
     ItemValue = ShellStrToUintn (Temp);
     for (; ItemValue > 0; --ItemValue) {
       switch (ResetType) {
-        case EfiResetCold:
-          Print (L"\rRemain %d Seconds to Cold Reset...", ItemValue);
-          break;
-        case EfiResetWarm:
-          Print (L"\rRemain %d Seconds to Warm Reset...", ItemValue);
-          break;
-        case EfiResetShutdown:
-          Print (L"\rRemain %d Seconds to Shutdown...", ItemValue);
-          break;
-        case EfiResetPlatformSpecific:
-          Print (L"\rRemain %d Seconds to Reset Platform Specific...", ItemValue);
-          break;
-        default:
-          Print (L"\rRemain %d Seconds to action...", ItemValue);
-          break;
+      case EfiResetCold:
+        Print (L"\rRemain %d Seconds to Cold Reset...", ItemValue);
+        break;
+      case EfiResetWarm:
+        Print (L"\rRemain %d Seconds to Warm Reset...", ItemValue);
+        break;
+      case EfiResetShutdown:
+        Print (L"\rRemain %d Seconds to Shutdown...", ItemValue);
+        break;
+      case EfiResetPlatformSpecific:
+        Print (L"\rRemain %d Seconds to Reset Platform Specific...", ItemValue);
+        break;
+      default:
+        Print (L"\rRemain %d Seconds to action...", ItemValue);
+        break;
       }
       gBS->Stall (STALL_1_SECONDS);
     }
     Print (L"\n");
   }
 
-  if ( (WakeSeconds != 0) && (AcpiBar != 0) && (ResetType == EfiResetShutdown)) {
+  if ((WakeSeconds != 0) && (AcpiBar != 0) && (ResetType == EfiResetShutdown)) {
     Status = gRT->SetWakeupTime (TRUE, &SecondTime);
     if (EFI_ERROR (Status)) {
       goto ON_EXIT;
@@ -321,12 +321,12 @@ LongRunToolEntry (
     ///
     /// Clear RTC PM1 status
     ///
-    IoOr16 ( (UINT16) AcpiBar + R_PCH_ACPI_PM1_STS, B_PCH_ACPI_PM1_STS_RTC);
+    IoOr16 ((UINT16) AcpiBar + R_PCH_ACPI_PM1_STS, B_PCH_ACPI_PM1_STS_RTC);
 
     ///
     /// set RTC_EN bit in PM1_EN to wake up from the alarm
     ///
-    IoOr16 ( (UINT16) AcpiBar + R_PCH_ACPI_PM1_EN, B_PCH_ACPI_PM1_EN_RTC);
+    IoOr16 ((UINT16) AcpiBar + R_PCH_ACPI_PM1_EN, B_PCH_ACPI_PM1_EN_RTC);
   }
 
   if (ResetType < EfiResetPlatformSpecific) {

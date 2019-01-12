@@ -19,9 +19,17 @@
 #include  <stdlib.h>
 #include  <wchar.h>
 #include  <time.h>
+#include  <string.h>
+#include  <stdbool.h>
+#include  <limits.h>
+#include  <math.h>
+#include  <stddef.h>
+#include  <stdint.h>
+#include  <string.h>
 
 #define   PREFIX_CCDLL
 #define   CC_STRICT
+#define   UEFI_SUPPORT
 
 #if defined(PREFIX_CCDLL)
     #define prefix(func)  ccdll##func
@@ -36,6 +44,11 @@
     #define PREFIX(FUNC)  CCSLL##FUNC
     #include "src/list/extd-ccsll.h"
 #endif
+
+int ccdllmain(void);
+int ccxllmain(void);
+int ccsllmain(void);
+int ccarrmain(void);
 
 /***
   Demonstrates basic workings of the main() function by displaying a
@@ -61,23 +74,31 @@ main (
 {
 #pragma warning(push)
 #pragma warning(disable: 4003)
-  prefix()(int) list;
+  prefix() (int) list;
 #pragma warning(pop)
-  prefix(_init)(list);
+  prefix (_init) (list);
 
-  srand((unsigned)time(NULL));
-  for (int cnt = 0; cnt < 10; cnt++)
-    prefix(_push_back)(list, rand());
+  srand ((unsigned)time (NULL));
+  for (int cnt = 0; cnt < 10; cnt++) {
+    prefix (_push_back) (list, rand());
+  }
 
-  prefix(_sort)(list);
+  prefix (_sort) (list);
 
-  prefix(_iter_init)(ITER_NTH(list, prefix(_size)(list)), list, 0);
+  prefix (_iter_init) (ITER_NTH (list, prefix (_size) (list)), list, 0);
 
   int count = 0;
-  PREFIX(_INCR)(ITER_NTH(list, prefix(_size)(list)))
-    printf("list[%d] = %d\r\n", count++, LREF(ITER_NTH(list, prefix(_size)(list))));
+  PREFIX (_INCR) (ITER_NTH (list, prefix (_size) (list))) {
+    printf ("list[%d] = %d\r\n", count++, LREF (ITER_NTH (list, prefix (_size) (list))));
+  }
 
-  prefix(_free)(list);
+  prefix (_free) (list);
+
+
+  ccdllmain();
+  ccxllmain();
+  ccsllmain();
+  ccarrmain();
 
   return EXIT_SUCCESS;
 }
