@@ -3,10 +3,10 @@ README
 ===========================
 Collect some EFI tools here.
 
-Type1 : UefiMain         (finally EntryPoint)
-Type2 : ShellCEntryLib   (ENTRY_POINT in inf) -> ShellAppMain   (finally EntryPoint)
-Type3 : ShellCEntryLib   (ENTRY_POINT in inf) -> ShellAppMain   (LibC)               -> main (finally EntryPoint)
-Type4 : ShellMain        (ENTRY_POINT in inf) -> ShellCEntryLib (UefiShellCEntryLib) -> ShellAppMain  (LibC)       -> main (finally EntryPoint)
+* Type1 : UefiMain         (finally EntryPoint)
+* Type2 : ShellCEntryLib   (ENTRY_POINT in inf) -> ShellAppMain   (finally EntryPoint)
+* Type3 : ShellCEntryLib   (ENTRY_POINT in inf) -> ShellAppMain   (LibC)               -> main (finally EntryPoint)
+* Type4 : ShellMain        (ENTRY_POINT in inf) -> ShellCEntryLib (UefiShellCEntryLib) -> ShellAppMain  (LibC)       -> main (finally EntryPoint)
 
 ****
 
