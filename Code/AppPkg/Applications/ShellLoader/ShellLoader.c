@@ -1134,7 +1134,7 @@ ProcessCommandLine(
     ShellInfoObject.ShellInitSettings.Delay = 0;
   }
 
-  ShellInfoObject.ShellInitSettings.BitUnion.Bits.Startup      = TRUE;
+  ShellInfoObject.ShellInitSettings.BitUnion.Bits.Startup      = FALSE;
   ShellInfoObject.ShellInitSettings.BitUnion.Bits.NoStartup    = TRUE;
 //  ShellInfoObject.ShellInitSettings.BitUnion.Bits.NoConsoleOut = FALSE;
 //  ShellInfoObject.ShellInitSettings.BitUnion.Bits.NoConsoleIn  = FALSE;
