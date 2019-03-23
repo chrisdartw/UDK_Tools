@@ -29,24 +29,24 @@
 #
 
 [Sources]
-# .\Shell\Shell.c
-  .\Shell\Shell.h
-  .\Shell\ShellParametersProtocol.c
-  .\Shell\ShellParametersProtocol.h
-  .\Shell\ShellProtocol.c
-  .\Shell\ShellProtocol.h
-  .\Shell\FileHandleWrappers.c
-  .\Shell\FileHandleWrappers.h
-  .\Shell\FileHandleInternal.h
-  .\Shell\ShellEnvVar.c
-  .\Shell\ShellEnvVar.h
-  .\Shell\ShellManParser.c
-  .\Shell\ShellManParser.h
-  .\Shell\Shell.uni
-  .\Shell\ConsoleLogger.c
-  .\Shell\ConsoleLogger.h
-  .\Shell\ConsoleWrappers.c
-  .\Shell\ConsoleWrappers.h
+# ..\Shell\Shell.c
+  ..\Shell\Shell.h
+  ..\Shell\ShellParametersProtocol.c
+  ..\Shell\ShellParametersProtocol.h
+  ..\Shell\ShellProtocol.c
+  ..\Shell\ShellProtocol.h
+  ..\Shell\FileHandleWrappers.c
+  ..\Shell\FileHandleWrappers.h
+  ..\Shell\FileHandleInternal.h
+  ..\Shell\ShellEnvVar.c
+  ..\Shell\ShellEnvVar.h
+  ..\Shell\ShellManParser.c
+  ..\Shell\ShellManParser.h
+  ..\Shell\Shell.uni
+  ..\Shell\ConsoleLogger.c
+  ..\Shell\ConsoleLogger.h
+  ..\Shell\ConsoleWrappers.c
+  ..\Shell\ConsoleWrappers.h
   ShellLoader.c
   EntryPoint.c
 

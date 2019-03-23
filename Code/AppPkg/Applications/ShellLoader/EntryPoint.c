@@ -40,16 +40,17 @@ main (
   IN char **Argv
   )
 {
+  wchar_t **wArgv = (wchar_t **)Argv;
 
   wprintf (L"Hello there fellow Programmer.\n");
   wprintf (L"Welcome to the world of EDK II.\n");
 
-  printf("We have %d arguments:\n", Argc);
+  wprintf(L"We have %d arguments:\n", Argc);
   for (int i = 0; i < Argc; ++i) {
-    printf("[%d] %s\n", i, Argv[i]);
+    wprintf(L"[%d] %s\n", i, wArgv[i]);
   }
 
-  printf ("Press ENTER key to continue...\n");
+  wprintf (L"Press ENTER key to continue...\n");
   for (char enter = 0; enter != '\r' && enter != '\n'; enter = (char)getchar());
 
   return EXIT_SUCCESS;

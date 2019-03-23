@@ -1033,6 +1033,7 @@ ProcessCommandLine(
                                    ) == 0) {
       ShellInfoObject.ShellInitSettings.BitUnion.Bits.Exit         = TRUE;
     } else if (StrnCmp (L"-", CurrentArg, 1) == 0) {
+#if 0
       // Unrecognized option
       ShellPrintHiiEx(-1, -1, NULL,
         STRING_TOKEN (STR_GEN_PROBLEM),
@@ -1040,6 +1041,7 @@ ProcessCommandLine(
         CurrentArg
         );
       return EFI_INVALID_PARAMETER;
+#endif
     } else {
       //
       // First argument should be Shell.efi image name
@@ -2640,6 +2642,10 @@ RunShellCommand(
   CHAR16                    *TempWalker;
   SHELL_OPERATION_TYPES     Type;
   CONST CHAR16              *CurDir;
+
+  if (TRUE) {
+    return (EFI_SUCCESS);
+  }
 
   ASSERT(CmdLine != NULL);
   if (StrLen(CmdLine) == 0) {
