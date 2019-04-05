@@ -315,10 +315,10 @@
   gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableBase64|0
 
 [PcdsDynamicDefault.Ia32]
-  gEfiNt32PkgTokenSpaceGuid.PcdWinNtFileSystem|L".!..\..\..\..\EdkShellBinPkg\Bin\Ia32\Apps"|VOID*|106
+  gEfiNt32PkgTokenSpaceGuid.PcdWinNtFileSystem|L".!..\..\..\..\EdkShellBinPkg\Bin\Ia32\Apps!..\..\..\..\VsProject"|VOID*|200
 
 [PcdsDynamicDefault.x64]
-  gEfiNt32PkgTokenSpaceGuid.PcdWinNtFileSystem|L".!..\..\..\..\EdkShellBinPkg\Bin\X64\Apps"|VOID*|106
+  gEfiNt32PkgTokenSpaceGuid.PcdWinNtFileSystem|L".!..\..\..\..\EdkShellBinPkg\Bin\X64\Apps!..\..\..\..\VsProject"|VOID*|200
 
 [PcdsDynamicHii.common.DEFAULT]
   gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutColumn|L"SetupConsoleConfig"|gEfiNt32PkgTokenSpaceGuid|0x0|80
@@ -586,6 +586,13 @@
 	  DevShell|StdLib/LibC/Uefi/Devices/daShell.inf
 	  DevMedia|StdLib/LibC/Uefi/Devices/daShell.inf
 	  DevUtility|StdLib/LibC/Uefi/Devices/daUtility.inf
+  }
+
+  AppPkg/Applications/UdfWalker/UdfWalker.inf{
+    <LibraryClasses>
+ 	    ShellLib|ShellPkg/Library/UefiShellLib/UefiShellLib.inf
+	    FileHandleLib|MdePkg/Library/UefiFileHandleLib/UefiFileHandleLib.inf
+	    ShellCEntryLib|ShellPkg/Library/UefiShellCEntryLib/UefiShellCEntryLib.inf
   }
 
 ###################################################################################################
