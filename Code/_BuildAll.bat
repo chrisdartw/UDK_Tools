@@ -22,7 +22,7 @@ rem ----------------------------------------------------------------------------
 pause
 call :GetLocalTimeCount LOCAL_TIME1
 
-rd Build /s /q
+rd Build /s /q > Log.txt
 
 call build -p AppPkg\AppPkg.dsc -t VS2015x86 -b DEBUG   -a X64      >> Log.txt
 call build -p AppPkg\AppPkg.dsc -t VS2015x86 -b DEBUG   -a IA32     >> Log.txt
@@ -38,6 +38,7 @@ set p=%p% "VbiosTest"
 set p=%p% "OpenGc3Test"
 set p=%p% "ShellLoader"
 set p=%p% "UdfWalker"
+set p=%p% "QualifyByDateTime"
 
 for %%i in (%p%) do (
   copy /y .\build\AppPkg\DEBUG_VS2015x86\IA32\%%~i.efi   .\AppPkg\Applications\%%~i\%%~i_DEBUG_IA32.efi   > NUL

@@ -113,6 +113,7 @@
 
 [Components]
   AppPkg/Applications/UdfWalker/UdfWalker.inf
+  AppPkg/Applications/QualifyByDateTime/QualifyByDateTime.inf
   
   AppPkg/Applications/LongRunShellTool/LongRunShellTool.inf
   AppPkg/Applications/VbiosTest/VbiosTest.inf
