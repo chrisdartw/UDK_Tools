@@ -13,7 +13,8 @@ if exist BaseTools\Bin\Win32\GenFds.exe rename BaseTools\Bin\Win32\GenFds.exe Ge
 set PYTHON_HOME=c:\python27
 set IASL_PREFIX=%cd%\..\Tool\
 set NASM_PREFIX=%cd%\..\Tool\
-call edksetup.bat --nt32 X64 Reconfig
+call edksetup.bat Reconfig VS2015
+set WINSDK81_PREFIX=%WINSDK81x86_PREFIX%
 
 rem --------------------------------------------------------------------------------
 rem --------------------------------------------------------------------------------
@@ -24,10 +25,10 @@ call :GetLocalTimeCount LOCAL_TIME1
 
 rd Build /s /q > Log.txt
 
-call build -p AppPkg\AppPkg.dsc -t VS2015x86 -b DEBUG   -a X64      >> Log.txt
-call build -p AppPkg\AppPkg.dsc -t VS2015x86 -b DEBUG   -a IA32     >> Log.txt
-call build -p AppPkg\AppPkg.dsc -t VS2015x86 -b RELEASE -a X64      >> Log.txt
-call build -p AppPkg\AppPkg.dsc -t VS2015x86 -b RELEASE -a IA32     >> Log.txt
+call build -p AppPkg\AppPkg.dsc -t VS2015 -b DEBUG   -a X64      >> Log.txt
+call build -p AppPkg\AppPkg.dsc -t VS2015 -b DEBUG   -a IA32     >> Log.txt
+call build -p AppPkg\AppPkg.dsc -t VS2015 -b RELEASE -a X64      >> Log.txt
+call build -p AppPkg\AppPkg.dsc -t VS2015 -b RELEASE -a IA32     >> Log.txt
 
 set p=
 set p=%p% "LongRunShellTool"
@@ -41,61 +42,70 @@ set p=%p% "UdfWalker"
 set p=%p% "QualifyByDateTime"
 
 for %%i in (%p%) do (
-  copy /y .\build\AppPkg\DEBUG_VS2015x86\IA32\%%~i.efi   .\AppPkg\Applications\%%~i\%%~i_DEBUG_IA32.efi   > NUL
-  copy /y .\build\AppPkg\DEBUG_VS2015x86\X64\%%~i.efi    .\AppPkg\Applications\%%~i\%%~i_DEBUG_X64.efi    > NUL
-  copy /y .\build\AppPkg\RELEASE_VS2015x86\IA32\%%~i.efi .\AppPkg\Applications\%%~i\%%~i_RELEASE_IA32.efi > NUL
-  copy /y .\build\AppPkg\RELEASE_VS2015x86\X64\%%~i.efi  .\AppPkg\Applications\%%~i\%%~i_RELEASE_X64.efi  > NUL
+  copy /y .\build\AppPkg\DEBUG_VS2015\IA32\%%~i.efi   .\AppPkg\Applications\%%~i\%%~i_DEBUG_IA32.efi   > NUL
+  copy /y .\build\AppPkg\DEBUG_VS2015\X64\%%~i.efi    .\AppPkg\Applications\%%~i\%%~i_DEBUG_X64.efi    > NUL
+  copy /y .\build\AppPkg\RELEASE_VS2015\IA32\%%~i.efi .\AppPkg\Applications\%%~i\%%~i_RELEASE_IA32.efi > NUL
+  copy /y .\build\AppPkg\RELEASE_VS2015\X64\%%~i.efi  .\AppPkg\Applications\%%~i\%%~i_RELEASE_X64.efi  > NUL
 )
 
-call build -p ShellPkg\ShellPkg.dsc -t VS2015x86 -b DEBUG   -a X64  >> Log.txt
-call build -p ShellPkg\ShellPkg.dsc -t VS2015x86 -b DEBUG   -a IA32 >> Log.txt
-call build -p ShellPkg\ShellPkg.dsc -t VS2015x86 -b RELEASE -a X64  >> Log.txt
-call build -p ShellPkg\ShellPkg.dsc -t VS2015x86 -b RELEASE -a IA32 >> Log.txt
+call build -p ShellPkg\ShellPkg.dsc -t VS2015 -b DEBUG   -a X64  >> Log.txt
+call build -p ShellPkg\ShellPkg.dsc -t VS2015 -b DEBUG   -a IA32 >> Log.txt
+call build -p ShellPkg\ShellPkg.dsc -t VS2015 -b RELEASE -a X64  >> Log.txt
+call build -p ShellPkg\ShellPkg.dsc -t VS2015 -b RELEASE -a IA32 >> Log.txt
 
 set p=
 set p=%p% "Shell"
 
 for %%i in (%p%) do (
-  copy /y .\build\Shell\DEBUG_VS2015x86\IA32\%%~i.efi   .\ShellPkg\Application\%%~i\%%~i_DEBUG_IA32.efi   > NUL
-  copy /y .\build\Shell\DEBUG_VS2015x86\X64\%%~i.efi    .\ShellPkg\Application\%%~i\%%~i_DEBUG_X64.efi    > NUL
-  copy /y .\build\Shell\RELEASE_VS2015x86\IA32\%%~i.efi .\ShellPkg\Application\%%~i\%%~i_RELEASE_IA32.efi > NUL
-  copy /y .\build\Shell\RELEASE_VS2015x86\X64\%%~i.efi  .\ShellPkg\Application\%%~i\%%~i_RELEASE_X64.efi  > NUL
+  copy /y .\build\Shell\DEBUG_VS2015\IA32\%%~i.efi   .\ShellPkg\Application\%%~i\%%~i_DEBUG_IA32.efi   > NUL
+  copy /y .\build\Shell\DEBUG_VS2015\X64\%%~i.efi    .\ShellPkg\Application\%%~i\%%~i_DEBUG_X64.efi    > NUL
+  copy /y .\build\Shell\RELEASE_VS2015\IA32\%%~i.efi .\ShellPkg\Application\%%~i\%%~i_RELEASE_IA32.efi > NUL
+  copy /y .\build\Shell\RELEASE_VS2015\X64\%%~i.efi  .\ShellPkg\Application\%%~i\%%~i_RELEASE_X64.efi  > NUL
 )
 
-call build -p Nt32Pkg\Nt32Pkg.dsc -t VS2015x86 -b DEBUG   -a X64    >> Log.txt
-call build -p Nt32Pkg\Nt32Pkg.dsc -t VS2015x86 -b DEBUG   -a IA32   >> Log.txt
-call build -p Nt32Pkg\Nt32Pkg.dsc -t VS2015x86 -b RELEASE -a X64    >> Log.txt
-call build -p Nt32Pkg\Nt32Pkg.dsc -t VS2015x86 -b RELEASE -a IA32   >> Log.txt
+  copy /y   .\build\Shell\DEBUG_VS2015\IA32\ShellPkg\Application\Shell\EA4BB293-2D7F-4456-A681-1F22F42CD0BC\OUTPUT\Shell.efi .\ShellPkg\Application\Shell\Shell_2nd_DEBUG_IA32.efi   > NUL
+  copy /y    .\build\Shell\DEBUG_VS2015\X64\ShellPkg\Application\Shell\EA4BB293-2D7F-4456-A681-1F22F42CD0BC\OUTPUT\Shell.efi .\ShellPkg\Application\Shell\Shell_2nd_DEBUG_X64.efi    > NUL
+  copy /y .\build\Shell\RELEASE_VS2015\IA32\ShellPkg\Application\Shell\EA4BB293-2D7F-4456-A681-1F22F42CD0BC\OUTPUT\Shell.efi .\ShellPkg\Application\Shell\Shell_2nd_RELEASE_IA32.efi > NUL
+  copy /y  .\build\Shell\RELEASE_VS2015\X64\ShellPkg\Application\Shell\EA4BB293-2D7F-4456-A681-1F22F42CD0BC\OUTPUT\Shell.efi .\ShellPkg\Application\Shell\Shell_2nd_RELEASE_X64.efi  > NUL
+
+call build -p EmulatorPkg\EmulatorPkg.dsc -t VS2015 -b DEBUG   -a X64    >> Log.txt
+call build -p EmulatorPkg\EmulatorPkg.dsc -t VS2015 -b DEBUG   -a IA32   >> Log.txt
+call build -p EmulatorPkg\EmulatorPkg.dsc -t VS2015 -b RELEASE -a X64    >> Log.txt
+call build -p EmulatorPkg\EmulatorPkg.dsc -t VS2015 -b RELEASE -a IA32   >> Log.txt
 
 
 rem --------------------------------------------------------------------------------
 rem --------------------------------------------------------------------------------
 rem --------------------------------------------------------------------------------
 
-rem call build run                -t VS2015x86 -b DEBUG   -a X64
-rem call build run                -t VS2015x86 -b DEBUG   -a IA32
-rem call build run                -t VS2015x86 -b RELEASE -a X64
-rem call build run                -t VS2015x86 -b RELEASE -a IA32
+rem call build run                -t VS2015 -b DEBUG   -a X64
+rem call build run                -t VS2015 -b DEBUG   -a IA32
+rem call build run                -t VS2015 -b RELEASE -a X64
+rem call build run                -t VS2015 -b RELEASE -a IA32
 
-rem .\Build\NT32X64\DEBUG_VS2015x86\X64\
-rem .\Build\NT32IA32\DEBUG_VS2015x86\IA32\
-rem .\Build\NT32IA32\RELEASE_VS2015x86\IA32\
-rem .\Build\NT32X64\RELEASE_VS2015x86\X64\
+rem pushd .\Build\EmulatorX64\DEBUG_VS2015\X64\
+rem WinHost.exe
+rem popd
 
-rem .\Build\AppPkg\DEBUG_VS2015x86\X64\
-rem .\Build\AppPkg\DEBUG_VS2015x86\IA32\
-rem .\Build\AppPkg\RELEASE_VS2015x86\IA32\
-rem .\Build\AppPkg\RELEASE_VS2015x86\X64\
+rem .\Build\NT32X64\DEBUG_VS2015\X64\
+rem .\Build\NT32IA32\DEBUG_VS2015\IA32\
+rem .\Build\NT32IA32\RELEASE_VS2015\IA32\
+rem .\Build\NT32X64\RELEASE_VS2015\X64\
+
+rem .\Build\AppPkg\DEBUG_VS2015\X64\
+rem .\Build\AppPkg\DEBUG_VS2015\IA32\
+rem .\Build\AppPkg\RELEASE_VS2015\IA32\
+rem .\Build\AppPkg\RELEASE_VS2015\X64\
 
 rem .\EdkShellBinPkg\Bin\X64\Apps\
 rem .\EdkShellBinPkg\Bin\Ia32\Apps\
 
 
 
-rem copy /y .\Build\AppPkg\DEBUG_VS2015x86\X64\ShellLoader.efi    .\Build\NT32X64\DEBUG_VS2015x86\X64\
-rem copy /y .\Build\AppPkg\DEBUG_VS2015x86\IA32\ShellLoader.efi   .\Build\NT32IA32\DEBUG_VS2015x86\IA32\
-rem copy /y .\Build\AppPkg\RELEASE_VS2015x86\X64\ShellLoader.efi  .\Build\NT32X64\RELEASE_VS2015x86\X64\
-rem copy /y .\Build\AppPkg\RELEASE_VS2015x86\IA32\ShellLoader.efi .\Build\NT32IA32\RELEASE_VS2015x86\IA32\
+rem copy /y .\Build\AppPkg\DEBUG_VS2015\X64\ShellLoader.efi    .\Build\NT32X64\DEBUG_VS2015\X64\
+rem copy /y .\Build\AppPkg\DEBUG_VS2015\IA32\ShellLoader.efi   .\Build\NT32IA32\DEBUG_VS2015\IA32\
+rem copy /y .\Build\AppPkg\RELEASE_VS2015\X64\ShellLoader.efi  .\Build\NT32X64\RELEASE_VS2015\X64\
+rem copy /y .\Build\AppPkg\RELEASE_VS2015\IA32\ShellLoader.efi .\Build\NT32IA32\RELEASE_VS2015\IA32\
 
 
 rem --------------------------------------------------------------------------------

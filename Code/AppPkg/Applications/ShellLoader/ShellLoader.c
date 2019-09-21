@@ -1,15 +1,10 @@
 /** @file
   This is THE shell (application)
 
-  Copyright (c) 2009 - 2017, Intel Corporation. All rights reserved.<BR>
+  Copyright (c) 2009 - 2019, Intel Corporation. All rights reserved.<BR>
   (C) Copyright 2013-2014 Hewlett-Packard Development Company, L.P.<BR>
-  This program and the accompanying materials
-  are licensed and made available under the terms and conditions of the BSD License
-  which accompanies this distribution.  The full text of the license may be found at
-  http://opensource.org/licenses/bsd-license.php
-
-  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
-  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+  Copyright 2015-2018 Dell Technologies.<BR>
+  SPDX-License-Identifier: BSD-2-Clause-Patent
 
 **/
 
@@ -111,7 +106,7 @@ TrimSpaces(
 }
 
 /**
-  Parse for the next instance of one string within another string. Can optionally make sure that 
+  Parse for the next instance of one string within another string. Can optionally make sure that
   the string was not escaped (^ character) per the shell specification.
 
   @param[in] SourceString             The string to search within
@@ -167,13 +162,13 @@ IsValidEnvironmentVariableName(
   )
 {
   CONST CHAR16    *Walker;
-  
+
   Walker = NULL;
 
   ASSERT (BeginPercent != NULL);
   ASSERT (EndPercent != NULL);
   ASSERT (BeginPercent < EndPercent);
-  
+
   if ((BeginPercent + 1) == EndPercent) {
     return FALSE;
   }
@@ -219,9 +214,9 @@ ContainsSplit(
   SecondQuote   = NULL;
   TempSpot      = FindFirstCharacter(CmdLine, L"|", L'^');
 
-  if (FirstQuote == NULL    || 
-      TempSpot == NULL      || 
-      TempSpot == CHAR_NULL || 
+  if (FirstQuote == NULL    ||
+      TempSpot == NULL      ||
+      TempSpot == CHAR_NULL ||
       FirstQuote > TempSpot
       ) {
     return (BOOLEAN) ((TempSpot != NULL) && (*TempSpot != CHAR_NULL));
@@ -230,7 +225,7 @@ ContainsSplit(
   while ((TempSpot != NULL) && (*TempSpot != CHAR_NULL)) {
     if (FirstQuote == NULL || FirstQuote > TempSpot) {
       break;
-    }    
+    }
     SecondQuote = FindNextInstance (FirstQuote + 1, L"\"", TRUE);
     if (SecondQuote == NULL) {
       break;
@@ -242,14 +237,14 @@ ContainsSplit(
       FirstQuote = FindNextInstance (SecondQuote + 1, L"\"", TRUE);
       TempSpot = FindFirstCharacter(TempSpot + 1, L"|", L'^');
       continue;
-    } 
+    }
   }
-  
+
   return (BOOLEAN) ((TempSpot != NULL) && (*TempSpot != CHAR_NULL));
 }
 
 /**
-  Function to start monitoring for CTRL-S using SimpleTextInputEx.  This 
+  Function to start monitoring for CTRL-S using SimpleTextInputEx.  This
   feature's enabled state was not known when the shell initially launched.
 
   @retval EFI_SUCCESS           The feature is enabled.
@@ -273,8 +268,8 @@ InternalEfiShellStartCtrlSMonitor(
     EFI_OPEN_PROTOCOL_GET_PROTOCOL);
   if (EFI_ERROR(Status)) {
     ShellPrintHiiEx(
-      -1, 
-      -1, 
+      -1,
+      -1,
       NULL,
       STRING_TOKEN (STR_SHELL_NO_IN_EX),
       ShellInfoObject.HiiHandle);
@@ -291,7 +286,7 @@ InternalEfiShellStartCtrlSMonitor(
     &KeyData,
     NotificationFunction,
     &ShellInfoObject.CtrlSNotifyHandle1);
-  
+
   KeyData.KeyState.KeyShiftState  = EFI_SHIFT_STATE_VALID|EFI_RIGHT_CONTROL_PRESSED;
   if (!EFI_ERROR(Status)) {
     Status = SimpleEx->RegisterKeyNotify(
@@ -309,7 +304,7 @@ InternalEfiShellStartCtrlSMonitor(
       &KeyData,
       NotificationFunction,
       &ShellInfoObject.CtrlSNotifyHandle3);
-  }  
+  }
   KeyData.KeyState.KeyShiftState  = EFI_SHIFT_STATE_VALID|EFI_RIGHT_CONTROL_PRESSED;
   if (!EFI_ERROR(Status)) {
     Status = SimpleEx->RegisterKeyNotify(
@@ -1011,7 +1006,11 @@ ProcessCommandLine(
                                  ) == 0) {
       ShellInfoObject.ShellInitSettings.BitUnion.Bits.Delay        = TRUE;
       // Check for optional delay value following "-delay"
-      DelayValueStr = gEfiShellParametersProtocol->Argv[LoopVar + 1];
+      if ((LoopVar + 1) >= gEfiShellParametersProtocol->Argc) {
+        DelayValueStr = NULL;
+      } else {
+        DelayValueStr = gEfiShellParametersProtocol->Argv[LoopVar + 1];
+      }
       if (DelayValueStr != NULL){
         if (*DelayValueStr == L':') {
           DelayValueStr++;
@@ -1153,7 +1152,7 @@ ProcessCommandLine(
 
 /**
   Function try to find location of the Startup.nsh file.
-  
+
   The buffer is callee allocated and should be freed by the caller.
 
   @param    ImageDevicePath       The path to the image for shell.  first place to look for the startup script
@@ -1180,7 +1179,7 @@ LocateStartupScript (
   // Try to find 'Startup.nsh' in the directory where the shell itself was launched.
   //
   MapName = ShellInfoObject.NewEfiShellProtocol->GetMapFromDevicePath (&ImageDevicePath);
-  if (MapName != NULL) {   
+  if (MapName != NULL) {
     StartupScriptPath = StrnCatGrow (&StartupScriptPath, &Size, MapName, 0);
     if (StartupScriptPath == NULL) {
       //
@@ -1192,6 +1191,8 @@ LocateStartupScript (
     if (TempSpot != NULL) {
       *TempSpot = CHAR_NULL;
     }
+
+    InternalEfiShellSetEnv(L"homefilesystem", StartupScriptPath, TRUE);
 
     StartupScriptPath = StrnCatGrow (&StartupScriptPath, &Size, ((FILEPATH_DEVICE_PATH *)FileDevicePath)->PathName, 0);
     PathRemoveLastItem (StartupScriptPath);
@@ -1230,6 +1231,7 @@ DoStartupScript(
   UINTN                         Delay;
   EFI_INPUT_KEY                 Key;
   CHAR16                        *FileStringPath;
+  CHAR16                        *FullFileStringPath;
   UINTN                         NewSize;
 
   Key.UnicodeChar = CHAR_NULL;
@@ -1297,7 +1299,13 @@ DoStartupScript(
 
   FileStringPath = LocateStartupScript (ImagePath, FilePath);
   if (FileStringPath != NULL) {
-    Status = RunScriptFile (FileStringPath, NULL, L"", ShellInfoObject.NewShellParametersProtocol);
+    FullFileStringPath = FullyQualifyPath(FileStringPath);
+    if (FullFileStringPath == NULL) {
+      Status = RunScriptFile (FileStringPath, NULL, FileStringPath, ShellInfoObject.NewShellParametersProtocol);
+    } else {
+      Status = RunScriptFile (FullFileStringPath, NULL, FullFileStringPath, ShellInfoObject.NewShellParametersProtocol);
+      FreePool(FullFileStringPath);
+    }
     FreePool (FileStringPath);
   } else {
     //
@@ -1411,7 +1419,7 @@ AddBufferToFreeList (
 
 
 /**
-  Create a new buffer list and stores the old one to OldBufferList 
+  Create a new buffer list and stores the old one to OldBufferList
 
   @param OldBufferList   The temporary list head used to store the nodes in BufferToFreeList.
 **/
@@ -1456,7 +1464,7 @@ AddLineToCommandHistory(
 
   Count = 0;
   MaxHistoryCmdCount = PcdGet16(PcdShellMaxHistoryCommandCount);
-  
+
   if (MaxHistoryCmdCount == 0) {
     return ;
   }
@@ -1570,7 +1578,7 @@ StripUnreplacedEnvironmentVariables(
       }
       continue;
     }
-    
+
     if (FirstQuote == NULL || SecondPercent < FirstQuote) {
       if (IsValidEnvironmentVariableName(FirstPercent, SecondPercent)) {
         //
@@ -1686,16 +1694,16 @@ ShellConvertVariables (
     ;  MasterEnvList != NULL && *MasterEnvList != CHAR_NULL
     ;  MasterEnvList += StrLen(MasterEnvList) + 1
    ){
-    StrCpyS( ItemTemp, 
-              ((ItemSize+(2*sizeof(CHAR16)))/sizeof(CHAR16)), 
+    StrCpyS( ItemTemp,
+              ((ItemSize+(2*sizeof(CHAR16)))/sizeof(CHAR16)),
               L"%"
               );
-    StrCatS( ItemTemp, 
-              ((ItemSize+(2*sizeof(CHAR16)))/sizeof(CHAR16)), 
+    StrCatS( ItemTemp,
+              ((ItemSize+(2*sizeof(CHAR16)))/sizeof(CHAR16)),
               MasterEnvList
               );
-    StrCatS( ItemTemp, 
-              ((ItemSize+(2*sizeof(CHAR16)))/sizeof(CHAR16)), 
+    StrCatS( ItemTemp,
+              ((ItemSize+(2*sizeof(CHAR16)))/sizeof(CHAR16)),
               L"%"
               );
     ShellCopySearchAndReplace(NewCommandLine1, NewCommandLine2, NewSize, ItemTemp, EfiShellGetEnv(MasterEnvList), TRUE, FALSE);
@@ -1721,7 +1729,7 @@ ShellConvertVariables (
   //
   ShellCopySearchAndReplace(NewCommandLine1, NewCommandLine2, NewSize, L"^%", L"%", TRUE, FALSE);
   StrCpyS(NewCommandLine1, NewSize/sizeof(CHAR16), NewCommandLine2);
-  
+
   FreePool(NewCommandLine2);
   FreePool(ItemTemp);
 
@@ -1847,7 +1855,7 @@ RunSplitCommand(
 }
 
 /**
-  Take the original command line, substitute any variables, free 
+  Take the original command line, substitute any variables, free
   the original string, return the modified copy.
 
   @param[in] CmdLine  pointer to the command line to update.
@@ -1871,7 +1879,7 @@ ShellSubstituteVariables(
 }
 
 /**
-  Take the original command line, substitute any alias in the first group of space delimited characters, free 
+  Take the original command line, substitute any alias in the first group of space delimited characters, free
   the original string, return the modified copy.
 
   @param[in] CmdLine  pointer to the command line to update.
@@ -1930,7 +1938,7 @@ ShellSubstituteAliases(
 
   SHELL_FREE_NON_NULL(*CmdLine);
   SHELL_FREE_NON_NULL(CommandName);
- 
+
   //
   // re-assign the passed in double pointer to point to our newly allocated buffer
   //
@@ -1943,7 +1951,7 @@ ShellSubstituteAliases(
   Takes the Argv[0] part of the command line and determine the meaning of it.
 
   @param[in] CmdName  pointer to the command line to update.
-  
+
   @retval Internal_Command    The name is an internal command.
   @retval File_Sys_Change     the name is a file system change.
   @retval Script_File_Name    the name is a NSH script file.
@@ -1971,7 +1979,7 @@ GetOperationType(
   // Test for file system change request.  anything ending with first : and cant have spaces.
   //
   if (CmdName[(StrLen(CmdName)-1)] == L':') {
-    if ( StrStr(CmdName, L" ") != NULL 
+    if ( StrStr(CmdName, L" ") != NULL
       || StrLen(StrStr(CmdName, L":")) > 1
       ) {
       return (Unknown_Invalid);
@@ -2001,7 +2009,7 @@ GetOperationType(
     SHELL_FREE_NON_NULL(FileWithPath);
     return (Efi_Application);
   }
-  
+
   SHELL_FREE_NON_NULL(FileWithPath);
   //
   // No clue what this is... return invalid flag...
@@ -2018,7 +2026,7 @@ GetOperationType(
   @retval EFI_OUT_OF_RESOURCES  A memory allocation failed.
   @retval EFI_NOT_FOUND         The operation type is unknown or invalid.
 **/
-EFI_STATUS 
+EFI_STATUS
 IsValidSplit(
   IN CONST CHAR16 *CmdLine
   )
@@ -2103,13 +2111,13 @@ VerifySplit(
   // recurse to verify the next item
   //
   TempSpot = FindFirstCharacter(CmdLine, L"|", L'^') + 1;
-  if (*TempSpot == L'a' && 
+  if (*TempSpot == L'a' &&
       (*(TempSpot + 1) == L' ' || *(TempSpot + 1) == CHAR_NULL)
      ) {
     // If it's an ASCII pipe '|a'
     TempSpot += 1;
   }
-  
+
   return (VerifySplit(TempSpot));
 }
 
@@ -2173,7 +2181,7 @@ ChangeMappedDrive(
   // make sure we are the right operation
   //
   ASSERT(CmdLine[(StrLen(CmdLine)-1)] == L':' && StrStr(CmdLine, L" ") == NULL);
-  
+
   //
   // Call the protocol API to do the work
   //
@@ -2318,7 +2326,7 @@ ProcessCommandLineToFinal(
   Run an internal shell command.
 
   This API will update the shell's environment since these commands are libraries.
-  
+
   @param[in] CmdLine          the command line to run.
   @param[in] FirstParameter   the first parameter on the command line
   @param[in] ParamProtocol    the shell parameters protocol pointer
@@ -2341,7 +2349,7 @@ RunInternalCommand(
   SHELL_STATUS              CommandReturnedStatus;
   BOOLEAN                   LastError;
   CHAR16                    *Walker;
-  CHAR16                    *NewCmdLine;  
+  CHAR16                    *NewCmdLine;
 
   NewCmdLine = AllocateCopyPool (StrSize (CmdLine), CmdLine);
   if (NewCmdLine == NULL) {
@@ -2451,6 +2459,7 @@ RunCommandOrFile(
   EFI_STATUS                Status;
   EFI_STATUS                StartStatus;
   CHAR16                    *CommandWithPath;
+  CHAR16                    *FullCommandWithPath;
   EFI_DEVICE_PATH_PROTOCOL  *DevPath;
   SHELL_STATUS              CalleeExitStatus;
 
@@ -2496,7 +2505,13 @@ RunCommandOrFile(
       }
       switch (Type) {
         case   Script_File_Name:
-          Status = RunScriptFile (CommandWithPath, NULL, CmdLine, ParamProtocol);
+          FullCommandWithPath = FullyQualifyPath(CommandWithPath);
+          if (FullCommandWithPath == NULL) {
+            Status = RunScriptFile (CommandWithPath, NULL, CmdLine, ParamProtocol);
+          } else {
+            Status = RunScriptFile (FullCommandWithPath, NULL, CmdLine, ParamProtocol);
+            FreePool(FullCommandWithPath);
+          }
           break;
         case   Efi_Application:
           //
@@ -2621,7 +2636,7 @@ SetupAndRunCommandOrFile(
 /**
   Function will process and run a command line.
 
-  This will determine if the command line represents an internal shell 
+  This will determine if the command line represents an internal shell
   command or dispatch an external application.
 
   @param[in] CmdLine      The command line to parse.
@@ -2701,7 +2716,7 @@ RunShellCommand(
     Status = ProcessNewSplitCommandLine(CleanOriginal);
     SHELL_FREE_NON_NULL(CleanOriginal);
     return (Status);
-  } 
+  }
 
   //
   // We need the first parameter information so we can determine the operation type
@@ -2762,7 +2777,7 @@ RunShellCommand(
 /**
   Function will process and run a command line.
 
-  This will determine if the command line represents an internal shell 
+  This will determine if the command line represents an internal shell
   command or dispatch an external application.
 
   @param[in] CmdLine      The command line to parse.
@@ -2776,38 +2791,6 @@ RunCommand(
   )
 {
   return (RunShellCommand(CmdLine, NULL));
-}
-
-
-STATIC CONST UINT16 InvalidChars[] = {L'*', L'?', L'<', L'>', L'\\', L'/', L'\"', 0x0001, 0x0002};
-/**
-  Function determines if the CommandName COULD be a valid command.  It does not determine whether
-  this is a valid command.  It only checks for invalid characters.
-
-  @param[in] CommandName    The name to check
-
-  @retval TRUE              CommandName could be a command name
-  @retval FALSE             CommandName could not be a valid command name
-**/
-BOOLEAN
-IsValidCommandName(
-  IN CONST CHAR16     *CommandName
-  )
-{
-  UINTN Count;
-  if (CommandName == NULL) {
-    ASSERT(FALSE);
-    return (FALSE);
-  }
-  for ( Count = 0
-      ; Count < sizeof(InvalidChars) / sizeof(InvalidChars[0])
-      ; Count++
-     ){
-    if (ScanMem16(CommandName, StrSize(CommandName), InvalidChars[Count]) != NULL) {
-      return (FALSE);
-    }
-  }
-  return (TRUE);
 }
 
 /**
@@ -2870,7 +2853,12 @@ RunScriptFileHandle (
       DeleteScriptFileStruct(NewScriptFile);
       return (EFI_OUT_OF_RESOURCES);
     }
-    for (LoopVar = 0 ; LoopVar < 10 && LoopVar < NewScriptFile->Argc; LoopVar++) {
+    //
+    // Put the full path of the script file into Argv[0] as required by section
+    // 3.6.2 of version 2.2 of the shell specification.
+    //
+    NewScriptFile->Argv[0] = StrnCatGrow(&NewScriptFile->Argv[0], NULL, NewScriptFile->ScriptName, 0);
+    for (LoopVar = 1 ; LoopVar < 10 && LoopVar < NewScriptFile->Argc; LoopVar++) {
       ASSERT(NewScriptFile->Argv[LoopVar] == NULL);
       NewScriptFile->Argv[LoopVar] = StrnCatGrow(&NewScriptFile->Argv[LoopVar], NULL, ShellInfoObject.NewShellParametersProtocol->Argv[LoopVar], 0);
       if (NewScriptFile->Argv[LoopVar] == NULL) {
@@ -2935,8 +2923,8 @@ RunScriptFileHandle (
       ; // conditional increment in the body of the loop
   ){
     ASSERT(CommandLine2 != NULL);
-    StrnCpyS( CommandLine2, 
-              PrintBuffSize/sizeof(CHAR16), 
+    StrnCpyS( CommandLine2,
+              PrintBuffSize/sizeof(CHAR16),
               NewScriptFile->CurrentCommand->Cl,
               PrintBuffSize/sizeof(CHAR16) - 1
               );
@@ -2962,8 +2950,8 @@ RunScriptFileHandle (
       //
       // Due to variability in starting the find and replace action we need to have both buffers the same.
       //
-      StrnCpyS( CommandLine, 
-                PrintBuffSize/sizeof(CHAR16), 
+      StrnCpyS( CommandLine,
+                PrintBuffSize/sizeof(CHAR16),
                 CommandLine2,
                 PrintBuffSize/sizeof(CHAR16) - 1
                 );
@@ -3018,8 +3006,8 @@ RunScriptFileHandle (
       Status = ShellCopySearchAndReplace(CommandLine,  CommandLine2, PrintBuffSize, L"%8", L"\"\"", FALSE, FALSE);
       Status = ShellCopySearchAndReplace(CommandLine2,  CommandLine, PrintBuffSize, L"%9", L"\"\"", FALSE, FALSE);
 
-      StrnCpyS( CommandLine2, 
-                PrintBuffSize/sizeof(CHAR16), 
+      StrnCpyS( CommandLine2,
+                PrintBuffSize/sizeof(CHAR16),
                 CommandLine,
                 PrintBuffSize/sizeof(CHAR16) - 1
                 );

@@ -69,25 +69,25 @@ cd /d "$(SolutionDir)..\"
 Set PYTHON_HOME=c:\python27
 Set IASL_PREFIX=$(SolutionDir)..\..\Tool\
 Set NASM_PREFIX=$(SolutionDir)..\..\Tool\
-call edksetup.bat --nt32 X64 Reconfig
-call build       -p Nt32Pkg\Nt32Pkg.dsc -t VS2015x86 -b DEBUG   -a IA32
+call edksetup.bat Reconfig VS2015
+call build       -p EmulatorPkg\EmulatorPkg.dsc -t VS2015 -b DEBUG   -a IA32
     </NMakeBuildCommandLine>
     <NMakeReBuildCommandLine>
 cd /d "$(SolutionDir)..\"
 Set PYTHON_HOME=c:\python27
 Set IASL_PREFIX=$(SolutionDir)..\..\Tool\
 Set NASM_PREFIX=$(SolutionDir)..\..\Tool\
-call edksetup.bat --nt32 X64 Reconfig
-call build clean -p Nt32Pkg\Nt32Pkg.dsc -t VS2015x86 -b DEBUG   -a IA32
-call build       -p Nt32Pkg\Nt32Pkg.dsc -t VS2015x86 -b DEBUG   -a IA32
+call edksetup.bat Reconfig VS2015
+call build clean -p EmulatorPkg\EmulatorPkg.dsc -t VS2015 -b DEBUG   -a IA32
+call build       -p EmulatorPkg\EmulatorPkg.dsc -t VS2015 -b DEBUG   -a IA32
     </NMakeReBuildCommandLine>
     <NMakeCleanCommandLine>
 cd /d "$(SolutionDir)..\"
 Set PYTHON_HOME=c:\python27
 Set IASL_PREFIX=$(SolutionDir)..\..\Tool\
 Set NASM_PREFIX=$(SolutionDir)..\..\Tool\
-call edksetup.bat --nt32 X64 Reconfig
-call build clean -p Nt32Pkg\Nt32Pkg.dsc -t VS2015x86 -b DEBUG   -a IA32
+call edksetup.bat Reconfig VS2015
+call build clean -p EmulatorPkg\EmulatorPkg.dsc -t VS2015 -b DEBUG   -a IA32
     </NMakeCleanCommandLine>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -98,25 +98,25 @@ cd /d "$(SolutionDir)..\"
 Set PYTHON_HOME=c:\python27
 Set IASL_PREFIX=$(SolutionDir)..\..\Tool\
 Set NASM_PREFIX=$(SolutionDir)..\..\Tool\
-call edksetup.bat --nt32 X64 Reconfig
-call build       -p Nt32Pkg\Nt32Pkg.dsc -t VS2015x86 -b DEBUG   -a X64
+call edksetup.bat Reconfig VS2015
+call build       -p EmulatorPkg\EmulatorPkg.dsc -t VS2015 -b DEBUG   -a X64
     </NMakeBuildCommandLine>
     <NMakeReBuildCommandLine>
 cd /d "$(SolutionDir)..\"
 Set PYTHON_HOME=c:\python27
 Set IASL_PREFIX=$(SolutionDir)..\..\Tool\
 Set NASM_PREFIX=$(SolutionDir)..\..\Tool\
-call edksetup.bat --nt32 X64 Reconfig
-call build clean -p Nt32Pkg\Nt32Pkg.dsc -t VS2015x86 -b DEBUG   -a X64
-call build       -p Nt32Pkg\Nt32Pkg.dsc -t VS2015x86 -b DEBUG   -a X64
+call edksetup.bat Reconfig VS2015
+call build clean -p EmulatorPkg\EmulatorPkg.dsc -t VS2015 -b DEBUG   -a X64
+call build       -p EmulatorPkg\EmulatorPkg.dsc -t VS2015 -b DEBUG   -a X64
     </NMakeReBuildCommandLine>
     <NMakeCleanCommandLine>
 cd /d "$(SolutionDir)..\"
 Set PYTHON_HOME=c:\python27
 Set IASL_PREFIX=$(SolutionDir)..\..\Tool\
 Set NASM_PREFIX=$(SolutionDir)..\..\Tool\
-call edksetup.bat --nt32 X64 Reconfig
-call build clean -p Nt32Pkg\Nt32Pkg.dsc -t VS2015x86 -b DEBUG   -a X64
+call edksetup.bat Reconfig VS2015
+call build clean -p EmulatorPkg\EmulatorPkg.dsc -t VS2015 -b DEBUG   -a X64
     </NMakeCleanCommandLine>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -127,25 +127,25 @@ cd /d "$(SolutionDir)..\"
 Set PYTHON_HOME=c:\python27
 Set IASL_PREFIX=$(SolutionDir)..\..\Tool\
 Set NASM_PREFIX=$(SolutionDir)..\..\Tool\
-call edksetup.bat --nt32 X64 Reconfig
-call build       -p Nt32Pkg\Nt32Pkg.dsc -t VS2015x86 -b RELEASE -a IA32
+call edksetup.bat Reconfig VS2015
+call build       -p EmulatorPkg\EmulatorPkg.dsc -t VS2015 -b RELEASE -a IA32
     </NMakeBuildCommandLine>
     <NMakeReBuildCommandLine>
 cd /d "$(SolutionDir)..\"
 Set PYTHON_HOME=c:\python27
 Set IASL_PREFIX=$(SolutionDir)..\..\Tool\
 Set NASM_PREFIX=$(SolutionDir)..\..\Tool\
-call edksetup.bat --nt32 X64 Reconfig
-call build clean -p Nt32Pkg\Nt32Pkg.dsc -t VS2015x86 -b RELEASE -a IA32
-call build       -p Nt32Pkg\Nt32Pkg.dsc -t VS2015x86 -b RELEASE -a IA32
+call edksetup.bat Reconfig VS2015
+call build clean -p EmulatorPkg\EmulatorPkg.dsc -t VS2015 -b RELEASE -a IA32
+call build       -p EmulatorPkg\EmulatorPkg.dsc -t VS2015 -b RELEASE -a IA32
     </NMakeReBuildCommandLine>
     <NMakeCleanCommandLine>
 cd /d "$(SolutionDir)..\"
 Set PYTHON_HOME=c:\python27
 Set IASL_PREFIX=$(SolutionDir)..\..\Tool\
 Set NASM_PREFIX=$(SolutionDir)..\..\Tool\
-call edksetup.bat --nt32 X64 Reconfig
-call build clean -p Nt32Pkg\Nt32Pkg.dsc -t VS2015x86 -b RELEASE -a IA32
+call edksetup.bat Reconfig VS2015
+call build clean -p EmulatorPkg\EmulatorPkg.dsc -t VS2015 -b RELEASE -a IA32
     </NMakeCleanCommandLine>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -156,25 +156,25 @@ cd /d "$(SolutionDir)..\"
 Set PYTHON_HOME=c:\python27
 Set IASL_PREFIX=$(SolutionDir)..\..\Tool\
 Set NASM_PREFIX=$(SolutionDir)..\..\Tool\
-call edksetup.bat --nt32 X64 Reconfig
-call build       -p Nt32Pkg\Nt32Pkg.dsc -t VS2015x86 -b RELEASE -a X64
+call edksetup.bat Reconfig VS2015
+call build       -p EmulatorPkg\EmulatorPkg.dsc -t VS2015 -b RELEASE -a X64
     </NMakeBuildCommandLine>
     <NMakeReBuildCommandLine>
 cd /d "$(SolutionDir)..\"
 Set PYTHON_HOME=c:\python27
 Set IASL_PREFIX=$(SolutionDir)..\..\Tool\
 Set NASM_PREFIX=$(SolutionDir)..\..\Tool\
-call edksetup.bat --nt32 X64 Reconfig
-call build clean -p Nt32Pkg\Nt32Pkg.dsc -t VS2015x86 -b RELEASE -a X64
-call build       -p Nt32Pkg\Nt32Pkg.dsc -t VS2015x86 -b RELEASE -a X64
+call edksetup.bat Reconfig VS2015
+call build clean -p EmulatorPkg\EmulatorPkg.dsc -t VS2015 -b RELEASE -a X64
+call build       -p EmulatorPkg\EmulatorPkg.dsc -t VS2015 -b RELEASE -a X64
     </NMakeReBuildCommandLine>
     <NMakeCleanCommandLine>
 cd /d "$(SolutionDir)..\"
 Set PYTHON_HOME=c:\python27
 Set IASL_PREFIX=$(SolutionDir)..\..\Tool\
 Set NASM_PREFIX=$(SolutionDir)..\..\Tool\
-call edksetup.bat --nt32 X64 Reconfig
-call build clean -p Nt32Pkg\Nt32Pkg.dsc -t VS2015x86 -b RELEASE -a X64
+call edksetup.bat Reconfig VS2015
+call build clean -p EmulatorPkg\EmulatorPkg.dsc -t VS2015 -b RELEASE -a X64
     </NMakeCleanCommandLine>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

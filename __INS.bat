@@ -16,17 +16,25 @@ rem ----------------------------------------------------------------------------
 rem --------------------------------------------------------------------------------
 rem --------------------------------------------------------------------------------
 
+call 7za x -y -o"Tool" "iasl-win-20190816.zip"
+
 call 7za x -y "nasm-2.14.02-win64.zip"
-rename nasm-2.14.02 Tool
-call 7za x -y -o"Tool" "iasl-win-20181213.zip"
+xcopy /i /e /y nasm-2.14.02 Tool
+rmdir /s /q    nasm-2.14.02
 
-call 7za x -y "edk2-vUDK2018.zip"
-rename edk2-vUDK2018 UDK2018
+call 7za x -y "edk2-libc-master.zip"
+xcopy /i /e /y edk2-libc-master UDK2019
+rmdir /s /q    edk2-libc-master
 
-call 7za x -y -o"UDK2018\BaseTools\Bin" "edk2-BaseTools-win32-master.zip"
-rename UDK2018\BaseTools\Bin\edk2-BaseTools-win32-master Win32
+call 7za x -y "edk2-edk2-stable201908.zip"
+xcopy /i /e /y edk2-edk2-stable201908 UDK2019
+rmdir /s /q    edk2-edk2-stable201908
 
-xcopy /i /e /y code UDK2018
+call 7za x -y -o"UDK2019\BaseTools\Bin" "edk2-BaseTools-win32-master.zip"
+rmdir /s /q    UDK2019\BaseTools\Bin\Win32
+rename UDK2019\BaseTools\Bin\edk2-BaseTools-win32-master Win32
+
+xcopy /i /e /y code UDK2019
 
 rem --------------------------------------------------------------------------------
 rem --------------------------------------------------------------------------------
