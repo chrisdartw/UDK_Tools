@@ -1,16 +1,21 @@
 @echo off
 setlocal enableextensions enabledelayedexpansion
 
+rem --------------------------------------------------------------------------------
+rem -- Environment Settings
+rem --------------------------------------------------------------------------------
+
 if not defined VCINSTALLDIR call "%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" amd64
 chdir /d "%~dp0"
 
-IF EXIST BaseTools\Bin\Win32\GenFds.exe rename BaseTools\Bin\Win32\GenFds.exe GenFds.labz
+rem if exist BaseTools\Bin\Win32\GenFds.exe rename BaseTools\Bin\Win32\GenFds.exe GenFds.labz
 
-Set PYTHON_HOME=c:\python27
+set PYTHON_HOME=c:\python27
 Set PYTHON_FREEZER_PATH=%PYTHON_HOME%\Scripts
-Set IASL_PREFIX=%cd%\..\Tool\
-Set NASM_PREFIX=%cd%\..\Tool\
+set IASL_PREFIX=%cd%\..\Tool\
+set NASM_PREFIX=%cd%\..\Tool\
 call edksetup.bat Reconfig VS2015
+set WINSDK81_PREFIX=%WINSDK81x86_PREFIX%
 
 cmd
 

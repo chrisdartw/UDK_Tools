@@ -16,25 +16,54 @@ rem ----------------------------------------------------------------------------
 rem --------------------------------------------------------------------------------
 rem --------------------------------------------------------------------------------
 
-call 7za x -y -o"Tool" "iasl-win-20190816.zip"
 
-call 7za x -y "nasm-2.14.02-win64.zip"
-xcopy /i /e /y nasm-2.14.02 Tool
-rmdir /s /q    nasm-2.14.02
+call wget --continue https://acpica.org/sites/acpica/files/iasl-win-20200717.zip
+call 7za x -y -o"Tool" "iasl-win-20200717.zip"
 
-call 7za x -y "edk2-libc-master.zip"
-xcopy /i /e /y edk2-libc-master UDK2019
+call wget --continue https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/win64/nasm-2.15.05-win64.zip
+call 7za x -y "nasm-2.15.05-win64.zip"
+xcopy /i /e /y nasm-2.15.05 Tool
+rmdir /s /q    nasm-2.15.05
+
+call wget --continue -O edk2-libc.zip https://github.com/tianocore/edk2-libc/archive/master.zip
+call 7za x -y "edk2-libc.zip"
+xcopy /i /e /y edk2-libc-master UDK2020
 rmdir /s /q    edk2-libc-master
 
-call 7za x -y "edk2-edk2-stable201908.zip"
-xcopy /i /e /y edk2-edk2-stable201908 UDK2019
-rmdir /s /q    edk2-edk2-stable201908
+call wget --continue https://github.com/tianocore/edk2/archive/edk2-stable202005.zip
+call 7za x -y "edk2-stable202005.zip"
+xcopy /i /e /y edk2-edk2-stable202005 UDK2020
+rmdir /s /q    edk2-edk2-stable202005
 
-call 7za x -y -o"UDK2019\BaseTools\Bin" "edk2-BaseTools-win32-master.zip"
-rmdir /s /q    UDK2019\BaseTools\Bin\Win32
-rename UDK2019\BaseTools\Bin\edk2-BaseTools-win32-master Win32
+call wget --continue https://github.com/openssl/openssl/archive/OpenSSL_1_1_1g.zip
+call 7za x -y "OpenSSL_1_1_1g.zip"
+xcopy /i /e /y openssl-OpenSSL_1_1_1g UDK2020\CryptoPkg\Library\OpensslLib\openssl\
+rmdir /s /q    openssl-OpenSSL_1_1_1g
 
-xcopy /i /e /y code UDK2019
+call wget --continue -O "softfloat.zip" https://github.com/ucb-bar/berkeley-softfloat-3/archive/master.zip
+call 7za x -y "softfloat.zip"
+xcopy /i /e /y berkeley-softfloat-3-master UDK2020\ArmPkg\Library\ArmSoftFloatLib\berkeley-softfloat-3\
+rmdir /s /q    berkeley-softfloat-3-master
+
+call wget --continue https://git.cryptomilk.org/projects/cmocka.git/snapshot/cmocka-1.1.5.zip
+call 7za x -y "cmocka-1.1.5.zip"
+xcopy /i /e /y cmocka-1.1.5 UDK2020\UnitTestFrameworkPkg\Library\CmockaLib\cmocka\
+rmdir /s /q    cmocka-1.1.5
+
+call wget --continue https://github.com/kkos/oniguruma/archive/v6.9.5_rev1.zip
+call 7za x -y "v6.9.5_rev1.zip"
+xcopy /i /e /y oniguruma-6.9.5_rev1 UDK2020\MdeModulePkg\Universal\RegularExpressionDxe\oniguruma\
+rmdir /s /q    oniguruma-6.9.5_rev1
+
+call wget --continue https://github.com/google/brotli/archive/v1.0.7.zip
+call 7za x -y "v1.0.7.zip"
+xcopy /i /e /y brotli-1.0.7 UDK2020\MdeModulePkg\Library\BrotliCustomDecompressLib\brotli\
+xcopy /i /e /y brotli-1.0.7 UDK2020\BaseTools\Source\C\BrotliCompress\brotli\
+rmdir /s /q    brotli-1.0.7
+
+
+xcopy /i /e /y code UDK2020
+
 
 rem --------------------------------------------------------------------------------
 rem --------------------------------------------------------------------------------
@@ -47,3 +76,4 @@ exit /b 0
 rem --------------------------------------------------------------------------------
 rem --------------------------------------------------------------------------------
 rem --------------------------------------------------------------------------------
+
