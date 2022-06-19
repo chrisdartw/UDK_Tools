@@ -5,17 +5,17 @@ rem ----------------------------------------------------------------------------
 rem -- Environment Settings
 rem --------------------------------------------------------------------------------
 
-if not defined VCINSTALLDIR call "%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" amd64
+rem if not defined VCINSTALLDIR call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvars64.bat"
+if not defined VCINSTALLDIR call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsamd64_x86.bat"
+rem if not defined VCINSTALLDIR call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvars32.bat"
+rem if not defined VCINSTALLDIR call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsx86_amd64.bat"
 chdir /d "%~dp0"
 
-rem if exist BaseTools\Bin\Win32\GenFds.exe rename BaseTools\Bin\Win32\GenFds.exe GenFds.labz
-
-set PYTHON_HOME=c:\python27
-Set PYTHON_FREEZER_PATH=%PYTHON_HOME%\Scripts
-set IASL_PREFIX=%cd%\..\Tool\
+set CLANG_BIN=%VCINSTALLDIR%Tools\Llvm\x64\bin
 set NASM_PREFIX=%cd%\..\Tool\
-call edksetup.bat Reconfig VS2015
-set WINSDK81_PREFIX=%WINSDK81x86_PREFIX%
+set IASL_PREFIX=%cd%\..\Tool\
+set PYTHON_HOME=%LOCALAPPDATA%\Programs\Python\Python38\
+call edksetup.bat Reconfig VS2019
 
 cmd
 

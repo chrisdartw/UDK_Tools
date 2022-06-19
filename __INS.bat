@@ -17,52 +17,52 @@ rem ----------------------------------------------------------------------------
 rem --------------------------------------------------------------------------------
 
 
-call wget --continue https://acpica.org/sites/acpica/files/iasl-win-20200717.zip
-call 7za x -y -o"Tool" "iasl-win-20200717.zip"
+call wget --no-check-certificate --continue https://acpica.org/sites/acpica/files/iasl-win-20220331.zip
+call 7za x -y -o"Tool" "iasl-win-20220331.zip"
 
-call wget --continue https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/win64/nasm-2.15.05-win64.zip
+call wget --no-check-certificate --continue https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/win64/nasm-2.15.05-win64.zip
 call 7za x -y "nasm-2.15.05-win64.zip"
 xcopy /i /e /y nasm-2.15.05 Tool
 rmdir /s /q    nasm-2.15.05
 
 call wget --continue -O edk2-libc.zip https://github.com/tianocore/edk2-libc/archive/master.zip
 call 7za x -y "edk2-libc.zip"
-xcopy /i /e /y edk2-libc-master UDK2020
+xcopy /i /e /y edk2-libc-master UDK2022
 rmdir /s /q    edk2-libc-master
 
-call wget --continue https://github.com/tianocore/edk2/archive/edk2-stable202005.zip
-call 7za x -y "edk2-stable202005.zip"
-xcopy /i /e /y edk2-edk2-stable202005 UDK2020
-rmdir /s /q    edk2-edk2-stable202005
+call wget --continue https://github.com/tianocore/edk2/archive/edk2-stable202205.zip
+call 7za x -y "edk2-stable202205.zip"
+xcopy /i /e /y edk2-edk2-stable202205 UDK2022
+rmdir /s /q    edk2-edk2-stable202205
 
-call wget --continue https://github.com/openssl/openssl/archive/OpenSSL_1_1_1g.zip
-call 7za x -y "OpenSSL_1_1_1g.zip"
-xcopy /i /e /y openssl-OpenSSL_1_1_1g UDK2020\CryptoPkg\Library\OpensslLib\openssl\
-rmdir /s /q    openssl-OpenSSL_1_1_1g
+rem --------------------------------------------------------------------------------
 
-call wget --continue -O "softfloat.zip" https://github.com/ucb-bar/berkeley-softfloat-3/archive/master.zip
-call 7za x -y "softfloat.zip"
-xcopy /i /e /y berkeley-softfloat-3-master UDK2020\ArmPkg\Library\ArmSoftFloatLib\berkeley-softfloat-3\
-rmdir /s /q    berkeley-softfloat-3-master
+call wget --continue https://github.com/tianocore/edk2/releases/download/edk2-stable202111/submodule-BaseTools-Source-C-BrotliCompress-brotli.zip
+call 7za x -y -oUDK2022 "submodule-BaseTools-Source-C-BrotliCompress-brotli.zip"
 
-call wget --continue https://git.cryptomilk.org/projects/cmocka.git/snapshot/cmocka-1.1.5.zip
-call 7za x -y "cmocka-1.1.5.zip"
-xcopy /i /e /y cmocka-1.1.5 UDK2020\UnitTestFrameworkPkg\Library\CmockaLib\cmocka\
-rmdir /s /q    cmocka-1.1.5
+call wget --continue https://github.com/tianocore/edk2/releases/download/edk2-stable202111/submodule-CryptoPkg-Library-OpensslLib-openssl.zip
+call 7za x -y -oUDK2022 "submodule-CryptoPkg-Library-OpensslLib-openssl.zip"
 
-call wget --continue https://github.com/kkos/oniguruma/archive/v6.9.5_rev1.zip
-call 7za x -y "v6.9.5_rev1.zip"
-xcopy /i /e /y oniguruma-6.9.5_rev1 UDK2020\MdeModulePkg\Universal\RegularExpressionDxe\oniguruma\
-rmdir /s /q    oniguruma-6.9.5_rev1
+call wget --continue https://github.com/tianocore/edk2/releases/download/edk2-stable202111/submodule-MdeModulePkg-Library-BrotliCustomDecompressLib-brotli.zip
+call 7za x -y -oUDK2022 "submodule-MdeModulePkg-Library-BrotliCustomDecompressLib-brotli.zip"
 
-call wget --continue https://github.com/google/brotli/archive/v1.0.7.zip
-call 7za x -y "v1.0.7.zip"
-xcopy /i /e /y brotli-1.0.7 UDK2020\MdeModulePkg\Library\BrotliCustomDecompressLib\brotli\
-xcopy /i /e /y brotli-1.0.7 UDK2020\BaseTools\Source\C\BrotliCompress\brotli\
-rmdir /s /q    brotli-1.0.7
+call wget --no-check-certificate --continue https://github.com/tianocore/edk2/releases/download/edk2-stable202111/submodule-MdeModulePkg-Universal-RegularExpressionDxe-oniguruma.zip
+call 7za x -y -oUDK2022 "submodule-MdeModulePkg-Universal-RegularExpressionDxe-oniguruma.zip"
 
+call wget --no-check-certificate --continue https://github.com/tianocore/edk2/releases/download/edk2-stable202111/submodule-RedfishPkg-Library-JsonLib-jansson.zip
+call 7za x -y -oUDK2022 "submodule-RedfishPkg-Library-JsonLib-jansson.zip"
 
-xcopy /i /e /y code UDK2020
+call wget --no-check-certificate --continue https://github.com/tianocore/edk2/releases/download/edk2-stable202111/submodule-SoftFloat.zip
+call 7za x -y -oUDK2022 "submodule-SoftFloat.zip"
+
+call wget --no-check-certificate --continue https://github.com/tianocore/edk2/releases/download/edk2-stable202111/submodule-UnitTestFrameworkPkg-Library-CmockaLib-cmocka.zip
+call 7za x -y -oUDK2022 "submodule-UnitTestFrameworkPkg-Library-CmockaLib-cmocka.zip"
+
+rem --------------------------------------------------------------------------------
+
+call wget --no-check-certificate --continue https://www.python.org/ftp/python/3.8.10/python-3.8.10-amd64.exe
+
+xcopy /i /e /y code UDK2022
 
 
 rem --------------------------------------------------------------------------------

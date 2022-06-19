@@ -21,6 +21,9 @@ Collect some EFI tools here.
 ___
 [Python 2.7.18  x86 ](https://www.python.org/ftp/python/2.7.18/python-2.7.18.msi)
 [Python 2.7.18 amd64](https://www.python.org/ftp/python/2.7.18/python-2.7.18.amd64.msi)
+[Python 3.8.10  x86 ](https://www.python.org/ftp/python/3.8.10/python-3.8.10.exe)
+[Python 3.8.10 amd64](https://www.python.org/ftp/python/3.8.10/python-3.8.10-amd64.exe)
+
 
 [vs2015 pro_enu u3](http://download.microsoft.com/download/e/b/c/ebc2c43f-3821-4a0b-82b1-d05368af1604/vs2015.3.pro_enu.iso)
 [vs2015 ent_enu u3](http://download.microsoft.com/download/8/4/3/843ec655-1b67-46c3-a7a4-10a1159cfa84/vs2015.3.ent_enu.iso)

@@ -7,7 +7,7 @@
 #   for important information about configuring this package for your
 #   environment.
 #
-#   Copyright (c) 2010 - 2018, Intel Corporation. All rights reserved.<BR>
+#   Copyright (c) 2010 - 2021, Intel Corporation. All rights reserved.<BR>
 #   SPDX-License-Identifier: BSD-2-Clause-Patent
 ##
 
@@ -27,6 +27,8 @@
   DEFINE DEBUG_ENABLE_OUTPUT      = FALSE       # Set to TRUE to enable debug output
   DEFINE DEBUG_PRINT_ERROR_LEVEL  = 0x80000040  # Flags to control amount of debug output
   DEFINE DEBUG_PROPERTY_MASK      = 0
+
+!include MdePkg/MdeLibs.dsc.inc
 
 [PcdsFeatureFlag]
 
@@ -83,6 +85,7 @@
   ShellCommandLib|ShellPkg/Library/UefiShellCommandLib/UefiShellCommandLib.inf
 #  ShellCEntryLib|ShellPkg/Library/UefiShellCEntryLib/UefiShellCEntryLib.inf
   HandleParsingLib|ShellPkg/Library/UefiHandleParsingLib/UefiHandleParsingLib.inf
+  OrderedCollectionLib|MdePkg/Library/BaseOrderedCollectionRedBlackTreeLib/BaseOrderedCollectionRedBlackTreeLib.inf
 
 ###################################################################################################
 #
@@ -151,11 +154,8 @@
       gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x80400040
   }
 
-#### Un-comment the following line to build Python 2.7.2.
-#  AppPkg/Applications/Python/PythonCore.inf
-
-#### Un-comment the following line to build Python 2.7.10.
-# AppPkg/Applications/Python/Python-2.7.10/Python2710.inf
+#### Un-comment the following line to build Python 3.6.8.
+# AppPkg/Applications/Python/Python-3.6.8/Python368.inf
 
 #### Un-comment the following line to build Lua.
 #  AppPkg/Applications/Lua/Lua.inf
