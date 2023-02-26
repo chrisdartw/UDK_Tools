@@ -6,15 +6,18 @@ rem -- Environment Settings
 rem --------------------------------------------------------------------------------
 
 rem if not defined VCINSTALLDIR call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvars64.bat"
-if not defined VCINSTALLDIR call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsamd64_x86.bat"
+rem if not defined VCINSTALLDIR call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsamd64_x86.bat"
 rem if not defined VCINSTALLDIR call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvars32.bat"
 rem if not defined VCINSTALLDIR call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsx86_amd64.bat"
+if not defined VCINSTALLDIR call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x86
 chdir /d "%~dp0"
 
 set CLANG_BIN=%VCINSTALLDIR%Tools\Llvm\x64\bin
 set NASM_PREFIX=%cd%\..\Tool\
 set IASL_PREFIX=%cd%\..\Tool\
-set PYTHON_HOME=%LOCALAPPDATA%\Programs\Python\Python38\
+set PYTHON_HOME=%LOCALAPPDATA%\Programs\Python\Python310\
+set PYTHON_HOME=%ProgramFiles(x86)%\Microsoft Visual Studio\Shared\Python39_64\
+
 call edksetup.bat Reconfig VS2019
 
 rem --------------------------------------------------------------------------------
@@ -54,15 +57,11 @@ call build -p ShellPkg\ShellPkg.dsc         -t VS2019 -b DEBUG   -a IA32 >> Log.
 call build -p ShellPkg\ShellPkg.dsc         -t VS2019 -b RELEASE -a X64  >> Log.txt
 call build -p ShellPkg\ShellPkg.dsc         -t VS2019 -b RELEASE -a IA32 >> Log.txt
 
-set p=
-set p=%p% "Shell"
 
-for %%i in (%p%) do (
-  copy /y .\build\Shell\DEBUG_VS2019\IA32\%%~i.efi   .\ShellPkg\Application\%%~i\%%~i_DEBUG_IA32.efi   > NUL
-  copy /y .\build\Shell\DEBUG_VS2019\X64\%%~i.efi    .\ShellPkg\Application\%%~i\%%~i_DEBUG_X64.efi    > NUL
-  copy /y .\build\Shell\RELEASE_VS2019\IA32\%%~i.efi .\ShellPkg\Application\%%~i\%%~i_RELEASE_IA32.efi > NUL
-  copy /y .\build\Shell\RELEASE_VS2019\X64\%%~i.efi  .\ShellPkg\Application\%%~i\%%~i_RELEASE_X64.efi  > NUL
-)
+  copy /y   .\build\Shell\DEBUG_VS2019\IA32\ShellPkg\Application\Shell\Shell\OUTPUT\Shell.efi .\ShellPkg\Application\Shell\Shell_DEBUG_IA32.efi   > NUL
+  copy /y    .\build\Shell\DEBUG_VS2019\X64\ShellPkg\Application\Shell\Shell\OUTPUT\Shell.efi .\ShellPkg\Application\Shell\Shell_DEBUG_X64.efi    > NUL
+  copy /y .\build\Shell\RELEASE_VS2019\IA32\ShellPkg\Application\Shell\Shell\OUTPUT\Shell.efi .\ShellPkg\Application\Shell\Shell_RELEASE_IA32.efi > NUL
+  copy /y  .\build\Shell\RELEASE_VS2019\X64\ShellPkg\Application\Shell\Shell\OUTPUT\Shell.efi .\ShellPkg\Application\Shell\Shell_RELEASE_X64.efi  > NUL
 
   copy /y   .\build\Shell\DEBUG_VS2019\IA32\ShellPkg\Application\Shell\EA4BB293-2D7F-4456-A681-1F22F42CD0BC\OUTPUT\Shell.efi .\ShellPkg\Application\Shell\Shell_2nd_DEBUG_IA32.efi   > NUL
   copy /y    .\build\Shell\DEBUG_VS2019\X64\ShellPkg\Application\Shell\EA4BB293-2D7F-4456-A681-1F22F42CD0BC\OUTPUT\Shell.efi .\ShellPkg\Application\Shell\Shell_2nd_DEBUG_X64.efi    > NUL

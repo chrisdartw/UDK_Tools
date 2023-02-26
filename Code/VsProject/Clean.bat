@@ -13,8 +13,8 @@ if exist ".\%prj%\Release" rd /s /q ".\%prj%\Release"
 if exist ".\%prj%\Debug"   rd /s /q ".\%prj%\Debug"
 if exist ".\%prj%\x64"     rd /s /q ".\%prj%\x64"
 
-if exist ".\.vs\%prj%\v15\ipch"             rd /s /q ".\.vs\%prj%\v15\ipch"
-if exist ".\.vs\%prj%\v15\Browse.VC.db"     del      ".\.vs\%prj%\v15\Browse.VC.db"
+if exist ".\.vs\%prj%\v16\ipch"             rd /s /q ".\.vs\%prj%\v16\ipch"
+if exist ".\.vs\%prj%\v16\Browse.VC.db"     del      ".\.vs\%prj%\v16\Browse.VC.db"
 
 if exist ".\%prj%.VC.db"                    del      ".\%prj%.VC.db"
 if exist ".\%prj%.VC.VC.opendb"             del      ".\%prj%.VC.VC.opendb"
